@@ -14,3 +14,5 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 
 /bop - return 1 girl image
 /girlsphoto - return the group images of the girl
+
+(Change 'TOKEN' to your the token given by BotFather)
