@@ -13,7 +13,7 @@ from telegram.ext import Updater, CommandHandler
 #open_link(url_)
 
 def plus_token():
-    tk = '916581787:AAGZPZPzV80HnhtBKmu2yHBl49Ekn0adkHU'
+    tk = 'TOKEN'
     return tk
     
 
