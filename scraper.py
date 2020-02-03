@@ -16,6 +16,10 @@ from datetime import datetime
 import os
 from telegram.ext import Updater, CommandHandler
 
+global title_list
+
+title_list = []
+
 def open_link(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -57,7 +61,7 @@ def download_images(image_link):
 
 def present_image(bot, update):
     
-    url = get_url()
+    url = page_list()
     image_res = requests.get(url)
     image_soup = BeautifulSoup(image_res.text, "html.parser")
     
@@ -65,7 +69,7 @@ def present_image(bot, update):
     title_div = image_soup.findAll('div', class_ = 'post-title')
     title = title_div[0].find('h2').text
     
-    #title_present(title)
+    # title_present(title)
     chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text = title) # Send title of images
     
@@ -82,9 +86,10 @@ def present_image(bot, update):
         
         chat_id = update.message.chat_id
         bot.send_photo(chat_id=chat_id, photo = image_url)
+#    return title
 #        send_photos()
     
-def get_url():
+def open_url():
     url_ = 'https://www.legendadult.net/2020/01/graphis-gals-yua-mikami-valentine-2018.html'
     return url_
     
@@ -98,8 +103,50 @@ def get_url():
 #    img_file = requests.get(url, allow_redirects = True).content
     
 
+def title_of(url_):
+    respond = requests.get(url_)
+    soup = BeautifulSoup(respond.text, "html.parser")
+    
+    title_div = soup.findAll('div', class_ = 'post-title')
+    title = title_div[0].find('h2').text
+    return title
 
-token = 'TOKEN'
+def page_list():
+    url_ = 'http://legendadult.net'
+    mainpageres = requests.get(url_)
+    mainsoup = BeautifulSoup(mainpageres.text, "html.parser")
+    
+    main_wrap = mainsoup.findAll('div', class_ = 'card-post')
+    main_list = [] # The list of url links in the page
+    for i in main_wrap:
+        lk = i.find('a').get('href')
+        
+        
+        
+        main_list.append(lk)
+#    return main_list
+    for i in main_list:
+        title = title_of(i)
+        if title not in title_list:
+            title_list.append(title)
+            return i
+#            break
+        else:
+            continue
+    
+        
+#        title_list.append(lk)
+#    print (main_list)
+        
+    
+    
+    
+
+    
+    
+#page_list()
+
+token = '916581787:AAGZPZPzV80HnhtBKmu2yHBl49Ekn0adkHU'
 
 
     
