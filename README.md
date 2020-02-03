@@ -18,4 +18,4 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 (Change 'TOKEN' to your the token given by BotFather)
 
 #### Update 3rd. Feb. 2020:
- /girlsphoto functions can return all the pages of the first page
+ The /girlsphoto function can return all the pages of the first page
