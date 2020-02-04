@@ -77,15 +77,18 @@ def present_image(bot, update):
     jpg_links = image_soup.findAll('div', class_ = 'separator')
     link = []
     for i in jpg_links:
-        link.append(i.find('a'))
+        link.append(i.find('a').get('href'))
     for photos in link:
-        image_url = photos.get('href')
+#        image_url = photos.get('href')
 #        img_file = requests.get(image_url, allow_redirects = True).content
 #        chat_id = update.message.chat_id
 #        bot.send_photo(chat_id=chat_id, photo=img_file)
         
         chat_id = update.message.chat_id
-        bot.send_photo(chat_id=chat_id, photo = image_url)
+        bot.send_photo(chat_id=chat_id, photo = photos)
+    
+    chat_id = update.message.chat_id
+    bot.send_message(chat_id=chat_id, text = 'Finish, {} photos in total'.format(len(link)))
 #    return title
 #        send_photos()
     
