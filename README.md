@@ -19,3 +19,6 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 
 #### Update 3rd. Feb. 2020:
  The /girlsphoto function can return all the pages of the first page
+
+#### Update 4th. Feb. 2020:
+ Optimise the code to make it faster, and to ensure the program finished before runing a new command.
