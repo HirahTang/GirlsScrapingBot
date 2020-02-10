@@ -17,9 +17,11 @@ import os
 from telegram.ext import Updater, CommandHandler
 
 global title_list
+global main_list
 
 title_list = []
-
+#main_list = ['https://www.legendadult.net/2020/02/xiuren-no1784-shen-meng-yao.html', 'https://www.legendadult.net/2020/02/xiuren-no1783-meng-xin-yue.html', 'https://www.legendadult.net/2020/02/xiuren-no1782-alice.html', 'https://www.legendadult.net/2020/02/xiuren-no1781-arjun.html', 'https://www.legendadult.net/2020/02/xiuren-no1780-lu-xuan-xuan.html', 'https://www.legendadult.net/2020/02/xiuren-no1778-sugar.html', 'https://www.legendadult.net/2020/02/xiuren-no1777-xiao-jiu-yue.html', 'https://www.legendadult.net/2020/02/xiuren-no1776-lele.html', 'https://www.legendadult.net/2020/02/xiuren-no1774-sandy.html', 'https://www.legendadult.net/2020/02/xiuren-no1772-nn.html', 'https://www.legendadult.net/2020/02/xiuren-no1771-sugar.html']
+main_list = []
 def open_link(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -72,13 +74,13 @@ def present_image(bot, update):
     # title_present(title)
     chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text = title) # Send title of images
-    
+    print('\nTitle: {}\n'.format(title))
     # Send Photos
     jpg_links = image_soup.findAll('div', class_ = 'separator')
     link = []
     for i in jpg_links:
         link.append(i.find('a').get('href'))
-    for photos in link:
+    for photos in tqdm(link):
 #        image_url = photos.get('href')
 #        img_file = requests.get(image_url, allow_redirects = True).content
 #        chat_id = update.message.chat_id
@@ -114,29 +116,56 @@ def title_of(url_):
     title = title_div[0].find('h2').text
     return title
 
+def load_more(url_):
+    mainpageres = requests.get(url_)
+    mainsoup = BeautifulSoup(mainpageres.text, "html.parser")
+    loadmore = mainsoup.findAll('div', class_ = 'loadmore')
+    return loadmore[0].find('a').get('href')
+
+
+
 def page_list():
+    
+    
     url_ = 'http://legendadult.net'
+    
+    
+    if len(main_list)/10 >= 1: # The 10 pages are loaded and it is not the first page
+        n = int(len(main_list)/10) # Divided value is of float type, convert it to int type for loop
+#        print ('triggerd\n, n=', n)
+        for i in range(n):
+            url_ = load_more(url_)
+#    elif len(main_list) == 0:
+#        url_ = 'http://legendadult.net'
+        
+#    print (url_)
     mainpageres = requests.get(url_)
     mainsoup = BeautifulSoup(mainpageres.text, "html.parser")
     
     main_wrap = mainsoup.findAll('div', class_ = 'card-post')
-    main_list = [] # The list of url links in the page
+#    print (main_list, len(main_list))
+#    main_list = [] # The list of url links in the page
     for i in main_wrap:
-        lk = i.find('a').get('href')
-        
-        
-        
-        main_list.append(lk)
-#    return main_list
-    for i in main_list:
-        title = title_of(i)
-        if title not in title_list:
-            title_list.append(title)
-            return i
-#            break
+        lk = i.find('a').get('href') # Get the link to the page, there are 10 pages for each load
+        if lk not in main_list:
+            main_list.append(lk)
+            title = title_of(lk)
+            return lk
         else:
             continue
-    
+            
+            
+        
+#    return main_list
+#    for i in main_list:
+#        title = title_of(i)
+#        if title not in title_list:
+#            title_list.append(title)
+#            return i
+##            break
+#        else:
+#            continue
+#    
         
 #        title_list.append(lk)
 #    print (main_list)
