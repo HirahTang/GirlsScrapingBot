@@ -22,3 +22,6 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 
 #### Update 4th. Feb. 2020:
  Optimise the code to make it faster, and to ensure the program finished before runing a new command.
+
+#### Update 10th. Feb. 20020:
+ Optimise the code to make it faster. The bot can scrape all the contents in the website now, instead of only the first page.
