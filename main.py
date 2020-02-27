@@ -5,8 +5,8 @@ Created on Fri Jan 31 17:09:29 2020
 
 @author: TH
 """
-
-from scraper import *
+import javscraper
+import scraper 
 from telegram.ext import Updater, CommandHandler
 
 #url_ = 'https://www.legendadult.net/search?updated-max=2020-01-30T02:40:00%2B08:00&max-results=40&start=0&by-date=false'
@@ -15,7 +15,7 @@ from telegram.ext import Updater, CommandHandler
 
 
 def plus_token():
-    tk = 'TOKEN'
+    tk = '916581787:AAGZPZPzV80HnhtBKmu2yHBl49Ekn0adkHU'
     return tk
     
 
@@ -31,8 +31,9 @@ def main():
     token = plus_token()
     updater = Updater(token)
     dp = updater.dispatcher
-    dp.add_handler(CommandHandler('girlsphoto',present_image))
+    dp.add_handler(CommandHandler('girlsphoto',scraper.present_image))
     dp.add_handler(CommandHandler('bop', bop))
+    dp.add_handler(CommandHandler('randomjav', javscraper.javpop))
     updater.start_polling()
     updater.idle()
     
