@@ -28,3 +28,6 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 
 #### Update 10th. Feb. 2020:
  Optimise the code to make it faster. The bot can scrape all the contents in the website now, instead of only the first page.
+
+#### Update 27th. Feb. 2020:
+ Bug fix & Add the new feature /randomjav
