@@ -64,6 +64,7 @@ def download_images(image_link):
 def present_image(bot, update):
     
     url = page_list()
+#    url = open_url()
     image_res = requests.get(url)
     image_soup = BeautifulSoup(image_res.text, "html.parser")
     
@@ -77,9 +78,15 @@ def present_image(bot, update):
     print('\nTitle: {}\n'.format(title))
     # Send Photos
     jpg_links = image_soup.findAll('div', class_ = 'separator')
+    
     link = []
+#    print (link)
     for i in jpg_links:
-        link.append(i.find('a').get('href'))
+        try:
+            link.append(i.find('a').get('href'))
+        except:
+            continue
+#    print (link)
     for photos in tqdm(link):
 #        image_url = photos.get('href')
 #        img_file = requests.get(image_url, allow_redirects = True).content
@@ -95,7 +102,8 @@ def present_image(bot, update):
 #        send_photos()
     
 def open_url():
-    url_ = 'https://www.legendadult.net/2020/01/graphis-gals-yua-mikami-valentine-2018.html'
+#    url_ = 'https://www.legendadult.net/2020/01/graphis-gals-yua-mikami-valentine-2018.html'
+    url_ = 'https://www.legendadult.net/2020/02/mysterious-bad-nun.html'
     return url_
     
 #def title_present(bot, update, content):
@@ -154,33 +162,3 @@ def page_list():
         else:
             continue
             
-            
-        
-#    return main_list
-#    for i in main_list:
-#        title = title_of(i)
-#        if title not in title_list:
-#            title_list.append(title)
-#            return i
-##            break
-#        else:
-#            continue
-#    
-        
-#        title_list.append(lk)
-#    print (main_list)
-        
-    
-    
-    
-
-    
-    
-#page_list()
-
-
-
-
-    
-#url_ = 'https://www.legendadult.net/search?updated-max=2020-01-30T02:40:00%2B08:00&max-results=40&start=0&by-date=false'
-#open_link(url_)
