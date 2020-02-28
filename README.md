@@ -20,6 +20,8 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 
 /randomjav - randomly give a jav
 
+type in the movie code - return the searched movie
+
 (Change 'TOKEN' to your the token given by BotFather)
 
 #### Update 3rd. Feb. 2020:
@@ -33,3 +35,6 @@ In the telegram bot https://t.me/girlscrapbot, two functions are applied:
 
 #### Update 27th. Feb. 2020:
  Bug fix & Add the new feature /randomjav
+ 
+#### Update 28th. Feb. 2020:
+ New feature javsearch & refine the randomjav command
