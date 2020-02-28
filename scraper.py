@@ -81,22 +81,17 @@ def present_image(bot, update):
     
     link = []
 #    print (link)
-    for i in jpg_links:
+    for i in tqdm(jpg_links):
         try:
+            link_i = i.find('a').get('href')
             link.append(i.find('a').get('href'))
+            bot.send_photo(chat_id=chat_id, photo = link_i)
+            
         except:
             continue
-#    print (link)
-    for photos in tqdm(link):
-#        image_url = photos.get('href')
-#        img_file = requests.get(image_url, allow_redirects = True).content
-#        chat_id = update.message.chat_id
-#        bot.send_photo(chat_id=chat_id, photo=img_file)
-        
-        chat_id = update.message.chat_id
-        bot.send_photo(chat_id=chat_id, photo = photos)
+
     
-    chat_id = update.message.chat_id
+    bot.send_message(chat_id=chat_id, text = url)
     bot.send_message(chat_id=chat_id, text = 'Finish, {} photos in total'.format(len(link)))
 #    return title
 #        send_photos()

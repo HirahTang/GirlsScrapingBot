@@ -16,7 +16,7 @@ from datetime import datetime
 import os
 from telegram.ext import Updater, CommandHandler
 import random
-
+import telegram
 
 def open_url():
     page_num = random.randint(1, 147)
@@ -27,7 +27,7 @@ def open_url():
     for link in html.findAll('a', class_="movie-box"):
 #        print (link.get('href'))
         first_page_links.append(link.get('href'))
-    mov_num = random.randint(1, 20)
+    mov_num = random.randint(0, 29)
     return first_page_links[mov_num]
 
     
@@ -41,34 +41,45 @@ def javpop(bot, update):
     
     chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text = title_name)
-    chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text = 'Headphoto:')# Send title of images
     
     for i in tqdm(bigImage):
         bigImage_s = i.get('href')
-        chat_id = update.message.chat_id
         bot.send_photo(chat_id=chat_id, photo = bigImage_s)
     
     print ('Head image download finish!')
     
-    chat_id = update.message.chat_id
+    bot.send_message(chat_id=chat_id, text = 'Class:')
+    
+    
+    genre = content.findAll('span', class_ = 'genre')
+    for i in genre:
+        txt = i.find('a').text
+        lk = i.find('a').get('href')
+#        bot.send_message(chat_id=chat_id,
+#                         text = txt)
+        bot.send_message(chat_id=chat_id, 
+                         text = '<a href = "{}">{}</a>'.format(lk, txt),
+                         parse_mode=telegram.ParseMode.HTML)
+##        
+##        bot.send_message(chat_id=chat_id, 
+##                 text='<b>bold</b> <i>italic</i> <a href="http://google.com">link</a>.', 
+##                 parse_mode=telegram.ParseMode.HTML)
+#    
     bot.send_message(chat_id=chat_id, text = 'Sample Images:')
     
     sample_image = content.find_all('a', class_ = 'sample-box')# Scrape the sample images
     for i in tqdm(sample_image):
         try:
             sample = i.get('href')
-            chat_id = update.message.chat_id
             bot.send_photo(chat_id = chat_id, photo = sample)
         except:
             continue
     
-    chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text = 'Finish, {} photos in total'.format(len(sample_image)))
     
     print ('Sample images download finish!')
     
-    chat_id = update.message.chat_id
     bot.send_message(chat_id=chat_id, text = 'Link: {}'.format(url))
     
     

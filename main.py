@@ -5,17 +5,18 @@ Created on Fri Jan 31 17:09:29 2020
 
 @author: TH
 """
+import javsearch
 import javscraper
 import scraper 
-from telegram.ext import Updater, CommandHandler
-
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from time import sleep
 #url_ = 'https://www.legendadult.net/search?updated-max=2020-01-30T02:40:00%2B08:00&max-results=40&start=0&by-date=false'
 #open_link(url_)
 
 
 
 def plus_token():
-    tk = 'Hide'
+    tk = '916581787:AAGZPZPzV80HnhtBKmu2yHBl49Ekn0adkHU'
     return tk
     
 
@@ -34,9 +35,20 @@ def main():
     dp.add_handler(CommandHandler('girlsphoto',scraper.present_image))
     dp.add_handler(CommandHandler('bop', bop))
     dp.add_handler(CommandHandler('randomjav', javscraper.javpop))
+    dp.add_handler(MessageHandler(Filters.text, javsearch.search))
+    
     updater.start_polling()
     updater.idle()
-    
+#def echo(bot, update):
+##    global update_id
+#    # Request updates after the last update_id
+#    
+##    for update in bot.get_updates(offset=update_id, timeout=10):
+##        update_id = update.update_id + 1
+#        
+#    print (update.message.text)
+#    chat_id = update.message.chat_id
+#    bot.send_message(chat_id=chat_id,text = update.message.text)
 if __name__ == '__main__':
     main()
     
