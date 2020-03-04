@@ -15,7 +15,7 @@ from pathlib import Path
 from datetime import datetime
 import os
 from telegram.ext import Updater, CommandHandler
-
+import timeit
 global title_list
 global main_list
 
@@ -63,6 +63,8 @@ def download_images(image_link):
 
 def present_image(bot, update):
     
+    start = timeit.default_timer()
+    
     url = page_list()
 #    url = open_url()
     image_res = requests.get(url)
@@ -92,7 +94,8 @@ def present_image(bot, update):
 
     
     bot.send_message(chat_id=chat_id, text = url)
-    bot.send_message(chat_id=chat_id, text = 'Finish, {} photos in total'.format(len(link)))
+    stop = timeit.default_timer()
+    bot.send_message(chat_id=chat_id, text = 'Finish in {} seconds, {} photos in total'.format(round(stop - start, 2), len(link)))
 #    return title
 #        send_photos()
     
