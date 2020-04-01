@@ -1,6 +1,6 @@
 ## GirlsScraping Bot
 
-### Aims to scrape girls in adult websites
+### Scrape girls online
 
 This project is telegram bot can scrape the images of girls on multiple websites and present them.
 
