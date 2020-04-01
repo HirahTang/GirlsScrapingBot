@@ -52,72 +52,85 @@ def javpop(bot, update):
     
     print ('Head image download finish!')
     
-    
-    # For director, studio(producer), label(seller), series
-    header_list = []
-    name_list = []
-    for i in content.findAll('p'):
-        t = i.find('a')
-        try :
-            print (t.text)
-            e = t.get('href')
+    link_ = []
         
-            header_list.append(e)
-            name_list.append(t.text)
+    for i in content.findAll('p'):
+        try:
+            for t in i.findAll('a'):
+                link_.append(t)
         except:
             continue
-    
-    name_list = name_list[0:-3]
-    header_list = header_list[0:-3]
-    
-    try:
-        bot.send_message(chat_id=chat_id, 
-                         text = '导演：<a href = "{}">{}</a>'.format(header_list[0], name_list[0]),
-                         parse_mode=telegram.ParseMode.HTML)
-                         
-    except:
-        bot.send_message(chat_id=chat_id,
-                         text = '导演：未知')
-    
-    try:
-        bot.send_message(chat_id=chat_id, 
-                         text = '制作商：<a href = "{}">{}</a>'.format(header_list[1], name_list[1]),
-                         parse_mode=telegram.ParseMode.HTML)
-                         
-    except:
-        bot.send_message(chat_id=chat_id,
-                         text = '制作商：未知')
+    link_ = link_[0:-7]
         
-    try:
-        bot.send_message(chat_id=chat_id, 
-                         text = '发行商：<a href = "{}">{}</a>'.format(header_list[2], name_list[2]),
-                         parse_mode=telegram.ParseMode.HTML)
-                         
-    except:
+    for i in link_:
         bot.send_message(chat_id=chat_id,
-                         text = '发行商：未知')
-        
-    try:
-        bot.send_message(chat_id=chat_id, 
-                         text = '系列：<a href = "{}">{}</a>'.format(header_list[3], name_list[3]),
+                         text = '<a href = "{}">{}</a>'.format(i.get('href'), i.text),
                          parse_mode=telegram.ParseMode.HTML)
-                         
-    except:
-        bot.send_message(chat_id=chat_id,
-                         text = '系列：暂无')
-    
-    bot.send_message(chat_id=chat_id, text = 'Class:')
-    
-    
-    genre = content.findAll('span', class_ = 'genre')
-    for i in genre:
-        txt = i.find('a').text
-        lk = i.find('a').get('href')
+#    # For director, studio(producer), label(seller), series
+#    header_list = []
+#    name_list = []
+#    for i in content.findAll('p'):
+#        t = i.find('a')
+#        try :
+##            print (t.text)
+#            e = t.get('href')
+#        
+#            header_list.append(e)
+#            name_list.append(t.text)
+#        except:
+#            continue
+#    
+#    name_list = name_list[0:-3]
+#    header_list = header_list[0:-3]
+#    
+#    try:
+#        bot.send_message(chat_id=chat_id, 
+#                         text = '导演：<a href = "{}">{}</a>'.format(header_list[0], name_list[0]),
+#                         parse_mode=telegram.ParseMode.HTML)
+#                         
+#    except:
 #        bot.send_message(chat_id=chat_id,
-#                         text = txt)
-        bot.send_message(chat_id=chat_id, 
-                         text = '<a href = "{}">{}</a>'.format(lk, txt),
-                         parse_mode=telegram.ParseMode.HTML)
+#                         text = '导演：未知')
+#    
+#    try:
+#        bot.send_message(chat_id=chat_id, 
+#                         text = '制作商：<a href = "{}">{}</a>'.format(header_list[1], name_list[1]),
+#                         parse_mode=telegram.ParseMode.HTML)
+#                         
+#    except:
+#        bot.send_message(chat_id=chat_id,
+#                         text = '制作商：未知')
+#        
+#    try:
+#        bot.send_message(chat_id=chat_id, 
+#                         text = '发行商：<a href = "{}">{}</a>'.format(header_list[2], name_list[2]),
+#                         parse_mode=telegram.ParseMode.HTML)
+#                         
+#    except:
+#        bot.send_message(chat_id=chat_id,
+#                         text = '发行商：未知')
+#        
+#    try:
+#        bot.send_message(chat_id=chat_id, 
+#                         text = '系列：<a href = "{}">{}</a>'.format(header_list[3], name_list[3]),
+#                         parse_mode=telegram.ParseMode.HTML)
+#                         
+#    except:
+#        bot.send_message(chat_id=chat_id,
+#                         text = '系列：暂无')
+#    
+#    bot.send_message(chat_id=chat_id, text = 'Class:')
+#    
+#    
+#    genre = content.findAll('span', class_ = 'genre')
+#    for i in genre:
+#        txt = i.find('a').text
+#        lk = i.find('a').get('href')
+##        bot.send_message(chat_id=chat_id,
+##                         text = txt)
+#        bot.send_message(chat_id=chat_id, 
+#                         text = '<a href = "{}">{}</a>'.format(lk, txt),
+#                         parse_mode=telegram.ParseMode.HTML)
 ##        
 ##        bot.send_message(chat_id=chat_id, 
 ##                 text='<b>bold</b> <i>italic</i> <a href="http://google.com">link</a>.', 
@@ -136,6 +149,22 @@ def javpop(bot, update):
     bot.send_message(chat_id=chat_id, text = 'Finish in {} seconds, {} photos in total'.format(round(stop - start, 2), len(sample_image)))
     
     print ('Sample images download finish!')
+    
+    print ('related films')
+    
+    rel_link = content.find('div', class_ = 'mb20')
+    for i in rel_link.findAll('a'):
+        link = str(i.get('href'))
+        code = link.split('/')[-1]
+        bot.send_message(chat_id=chat_id, text = code)
+        pic = i.find('div', class_ = 'photo-frame')
+        ttle = i.find('div', class_ = 'photo-info')
+        bot.send_message(chat_id=chat_id, text = ttle.span.text)
+        bot.send_photo(chat_id=chat_id, photo = pic.img.get('src'))
+        bot.send_message(chat_id=chat_id, text = "link:{}".format(link))
+        
+        
+        
     
     bot.send_message(chat_id=chat_id, text = 'Link: {}'.format(url))
     
