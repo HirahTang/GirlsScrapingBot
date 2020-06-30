@@ -16,7 +16,7 @@ from time import sleep
 
 
 def plus_token():
-    tk = '916581787:AAGZPZPzV80HnhtBKmu2yHBl49Ekn0adkHU'
+    tk = 'TOKENISHERE'
     return tk
     
 
