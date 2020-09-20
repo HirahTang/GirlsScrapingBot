@@ -19,6 +19,7 @@ def genre_valid(url, a1, a2): # Check if the page contains the idea genres
     genre = []    
     for i in html.findAll('span', class_ = 'genre'): # Get all the genres
         genre.append(i.text)
+#    print (genre)
     if a1 in genre and a2 in genre:
 #        download_url(url)
         print ("Found: {}".format(url.split('/')[-1]))
@@ -31,7 +32,7 @@ def genre_valid(url, a1, a2): # Check if the page contains the idea genres
 
 def iterate_url(url, a1, a2): # Iterate all the films in the Menu Page
     
-    print ("Page:{}\n".format(url[-1]))
+    print ("Page:{}\n".format(url.split('/')[-1]))
     response = requests.get(url)
     html = BeautifulSoup(response.text, "html.parser")
 
@@ -51,22 +52,27 @@ def iterate_url(url, a1, a2): # Iterate all the films in the Menu Page
 #    url = "https://www.javbus.com/genre/5c/2"
         url = url[:-1] +  str(int(url[-1]) + 1)
 #        print (url)
-#        iterate_url(url)
+        iterate_url(url, a1, a2)
     else:
         print ('All films iterated')
         
 
 def main():
-    a1 = '中出' # Keyword1
-    a2 = '戀腿癖' # Keyword2
+    a = input("Title:") # Title
+    a1 = input("Keyword1:") # Keyword1
+    a2 = input("Keyword2:") # Keyword2
+    web = input("Website:")
     os.chdir('/Users/TH/Desktop/Jav') # Wordking_D
     global f
-    f = open("{}+{}.txt".format(a1, a2),"w+") # Descriptive file
+    f = open("{}-{}+{}.txt".format(a, a1, a2),"w+") # Descriptive file
     global film_l
     film_l = []
-    os.makedirs('{}+{}'.format(a1, a2))
-    os.chdir('{}+{}'.format(a1, a2))
-    iterate_url("https://www.javbus.com/genre/2x/1", a1, a2)
+    try:
+        os.makedirs('{}-{}+{}'.format(a, a1, a2))
+    except:
+        os.chdir('/Users/TH/Desktop/Jav/{}-{}+{}'.format(a, a1, a2))
+    os.chdir('/Users/TH/Desktop/Jav/{}-{}+{}'.format(a, a1, a2))
+    iterate_url(web, a1, a2)
     f.close()
 #    download_all(film_l)
 if __name__  == "__main__":
