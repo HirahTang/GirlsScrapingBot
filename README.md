@@ -38,3 +38,6 @@ type in the movie code - return the searched movie
  
 #### Update 28th. Feb. 2020:
  New feature javsearch & refine the randomjav command
+
+#### Update 20th. Sep. 2020:
+ A programme can return Jav codes of specific genre
