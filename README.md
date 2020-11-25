@@ -1,8 +1,6 @@
-## GirlsScraping Bot
+## Scraping Bot
 
-### Scrape girls online
-
-This project is telegram bot can scrape the images of girls on multiple websites and present them.
+### Scraper bot based on Telegram
 
 ### run the main.py to start the bot
 
